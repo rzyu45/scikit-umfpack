@@ -30,28 +30,20 @@ _try_incdirs = [
     '/opt/local/include',
     '/sw/include',
     '/usr/include/suitesparse',
-    '/opt/homebrew/include/suitesparse'
+    '/opt/homebrew/Cellar/suite-sparse',
+    '/opt/homebrew/Cellar/suite-sparse/7.10.3/lib',
+    '/opt/homebrew/Cellar/suite-sparse/7.10.3/include/suitesparse'
 ]
-suitesparse_incdirs = []
-umfpack_header_dirs = []
-foreach _dir : _try_incdirs
-  if fs.exists(_dir)
-    suitesparse_incdirs += _dir
-    umfpack_header_dirs += include_directories(_dir)
-  endif
-endforeach
 
-# TODO
-umfpack_libdirs = []
-umfpack_libdir = meson.get_external_property('umfpack-libdir', 'UNKNOWN')
-umfpack_includedir = meson.get_external_property('umfpack-includedir', 'UNKNOWN')
-if umfpack_libdir != 'UNKNOWN'
-    umfpack_libdirs += umfpack_libdir
+suitesparse_incdirs = []
+# 将字符串路径转换为IncludeDirs对象
+umfpack_header_dirs = []
+if fs.exists('/opt/homebrew/Cellar/suite-sparse/7.10.3/include/suitesparse')
+  umfpack_header_dirs += include_directories('/opt/homebrew/Cellar/suite-sparse/7.10.3/include/suitesparse')
 endif
-if umfpack_includedir != 'UNKNOWN'
-    suitesparse_incdirs += umfpack_includedir
-    umfpack_header_dirs += include_directories(umfpack_includedir)
-endif
+
+umfpack_libdirs = ['/opt/homebrew/Cellar/suite-sparse/7.10.3/lib']
+
 
 # Find UMFPACK library.
 # Note that Suitesparse packaging is messy; the headers may be found under

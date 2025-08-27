@@ -9,3 +9,4 @@ wheels
 /docs/reference
 /scikits/umfpack/_umfpack.py
 /scikits/umfpack/_umfpack_wrap.c
+*.DS_Store
